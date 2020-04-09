@@ -1,7 +1,7 @@
-<div class="container-component">
-    <h3>{{beerName}}</h3>
+<div [class.out-of-range]="isTempCorrect">
+    <h3>{{ this.container.type}} :: {{this.container.temperature}}<sup>o</sup>C</h3>
     <ul>
-        <li><span>Minimum Temperature</span><span>{{minTemp}}</span></li>
-        <li><span>Maximum Temperature</span><span>{{maxTemp}}</span></li>
+        <li><span>Minimum Temperature</span><span>{{this.container.minTemp}}</span></li>
+        <li><span>Maximum Temperature</span><span>{{this.container.maxTemp}}</span></li>
     </ul>
 </div>

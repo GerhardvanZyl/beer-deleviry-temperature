@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
+    "vsc:run": "npm run build --prefix clientapp && node app",
     "test:dev": "jest",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
     "lint": "eslint ."

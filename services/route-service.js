@@ -18,10 +18,13 @@ module.exports = class RouteService {
      */
     initializeRoutes() {
 
-        // Truck controller
+        this._app.get('/', (req, res) => {
+            res.sendFile(__dirname + '../wwwroot/index.html');
+        });
+
         let truckController = this._truckController;
-        this._app.get('/truck/notifications', truckController.getNotifications.bind(truckController));
-        this._app.get('/truck/contentInfo', truckController.getContentInfo.bind(truckController));
+        this._app.get('/api/truck/notifications', truckController.getNotifications.bind(truckController));
+        this._app.get('/api/truck/contentInfo', truckController.getContentInfo.bind(truckController));
 
         this._logger.logInfo('Routes initialized ...');
     }

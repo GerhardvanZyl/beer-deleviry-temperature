@@ -40,6 +40,7 @@ monitoringService.start();
 
 let truckController = new TruckController(logger, webNotificationProvider, beerDataProvider, truckDataProvider, temperatureDataProvider);
 
+app.use(express.static("wwwroot"));
 new RouteService(app, logger, truckController).initializeRoutes();
 
 app.listen(port, () => {

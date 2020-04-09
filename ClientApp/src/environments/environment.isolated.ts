@@ -1,3 +1,4 @@
 export const environment = {
-  mode: "isolated"
-};
+    mode:"isolated"
+  };
+  
