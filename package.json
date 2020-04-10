@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "setup": "npm install && npm install --prefix clientapp",
     "run:server": "node app",
     "build:server":"npm run build",
     "build:run:all": "npm run build --prefix clientapp && node app",
