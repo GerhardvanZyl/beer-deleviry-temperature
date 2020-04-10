@@ -18,11 +18,17 @@ export class TruckContentsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.populate();
+        
         setInterval(() => {
-            this.truckService.contents().subscribe(
-                data => this.truckContents = data,
-                error => console.error(error) // Should render error in an error handling or status component
-            );
-        }, 4000);
+            this.populate();
+        }, 2500);
+    }
+
+    private populate():void{
+        this.truckService.contents().subscribe(
+            data => this.truckContents = data,
+            error => console.error(error) // Should render error in an error handling or status component
+        );
     }
 }

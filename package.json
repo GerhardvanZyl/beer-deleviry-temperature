@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "setup": "npm install && npm install --prefix clientapp",
+    "setup": "npm install && cd clientapp && npm install -n && cd ..",
     "run:server": "node app",
+    "run:all": "npm run build --prefix clientapp && node app",
     "build:server":"npm run build",
-    "build:run:all": "npm run build --prefix clientapp && node app",
     "test:unit-server": "jest",
     "test:unit-all": "jest && npm run test --prefix clientapp",
     "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
