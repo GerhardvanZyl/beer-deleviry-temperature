@@ -1,3 +1,3 @@
 export const environment = {
-  mode:"production"
+  mode: 'production'
 };

@@ -15,6 +15,4 @@ export class TruckService implements ITruckService {
     public contents(): Observable<TruckContents> {
         return this.http.get<TruckContents>(this.truckContentsUrl);
     }
-
-
 }

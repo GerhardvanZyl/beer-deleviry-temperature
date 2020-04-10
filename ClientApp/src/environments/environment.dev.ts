@@ -1,3 +1,3 @@
 export const environment = {
-  mode: "dev"
+  mode: 'dev'
 };

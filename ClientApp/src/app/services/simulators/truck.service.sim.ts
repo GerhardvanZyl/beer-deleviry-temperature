@@ -12,9 +12,57 @@ export class SimTruckService implements ITruckService {
 
     public contents(): Observable<TruckContents> {
         return new Observable<TruckContents>(observer => {
-            observer.next(JSON.parse('[{"containerId":1,"type":"Pilsner","temperature":5,"minTemp":4,"maxTemp":6,"position":"front-left"},{"containerId":2,"type":"IPA","temperature":0,"minTemp":5,"maxTemp":6,"position":"front-middle"},{"containerId":3,"type":"Lager","temperature":3,"minTemp":4,"maxTemp":7,"position":"front-right"},{"containerId":4,"type":"Stout","temperature":1,"minTemp":6,"maxTemp":8,"position":"middle-left"},{"containerId":5,"type":"Wheat Beer","temperature":4,"minTemp":3,"maxTemp":5,"position":"middle-center"},{"containerId":6,"type":"Pale Ale","temperature":2,"minTemp":4,"maxTemp":6,"position":"middle-right"}]'));
+            // JSON.parse is faster than creating an object literal
+            observer.next(JSON.parse(`[
+                {
+                    "containerId": 1,
+                    "maxTemp": 6,
+                    "minTemp": 4,
+                    "position": "front-left",
+                    "temperature": 5,
+                    "type": "Pilsner"
+                },
+                {
+                    "containerId": 2,
+                    "maxTemp": 6,
+                    "minTemp": 5,
+                    "position": "front-middle",
+                    "temperature": 0,
+                    "type": "IPA"
+                },
+                {
+                    "containerId": 3,
+                    "maxTemp": 7,
+                    "minTemp": 4,
+                    "position": "front-right",
+                    "temperature": 3,
+                    "type": "Lager"
+                },
+                {
+                    "containerId": 4,
+                    "maxTemp": 8,
+                    "minTemp": 6,
+                    "position": "middle-left",
+                    "temperature": 1,
+                    "type": "Stout"
+                },
+                {
+                    "containerId": 5,
+                    "maxTemp": 5,
+                    "minTemp": 3,
+                    "position": "middle-center",
+                    "temperature": 4,
+                    "type": "Wheat Beer"
+                },
+                {
+                    "containerId": 6,
+                    "maxTemp": 6,
+                    "minTemp": 4,
+                    "position": "middle-right",
+                    "temperature": 2,
+                    "type": "Pale Ale"
+                }
+            ]`));
         });
     }
-
-
 }

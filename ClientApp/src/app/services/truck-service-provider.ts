@@ -5,21 +5,19 @@ import { TruckService } from './truck.service';
 import { SimTruckService } from './simulators/truck.service.sim';
 import { Injectable, InjectionToken } from '@angular/core';
 
-let truckServiceFactory = (http: HttpClient) => {
-    
-    console.log("getting service: ", environment.mode === "isolated" )
-    
-    return environment.mode === "isolated" 
-    ? new SimTruckService(http) 
-    : new TruckService(http);
-}
+const truckServiceFactory = (http: HttpClient) => {
 
-export let TruckServiceToken = new InjectionToken<ITruckService>('ITruckService');
+    return environment.mode === 'isolated'
+        ? new SimTruckService(http)
+        : new TruckService(http);
+};
 
-export let TruckServiceProvider = {
+export const TruckServiceToken = new InjectionToken<ITruckService>('ITruckService');
+
+export const TruckServiceProvider = {
     provide: TruckServiceToken,
     useFactory: truckServiceFactory,
     deps: [
         HttpClient
     ]
-}
+};

@@ -4,11 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "vsc:run": "npm run build --prefix clientapp && node app",
-    "test:dev": "jest",
-    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
-    "lint": "eslint ."
+    "run:server": "node app",
+    "build:server":"npm run build",
+    "build:run:all": "npm run build --prefix clientapp && node app",
+    "test:unit-server": "jest",
+    "test:unit-all": "jest && npm run test --prefix clientapp",
+    "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
+    "lint:server": "eslint .",
+    "lint:all": "eslint . && npm run lint --prefix clientapp"
   },
   "keywords": [],
   "author": "Gerhard van Zyl",
@@ -21,5 +24,8 @@
     "eslint": "^6.8.0",
     "eslint-config-strongloop": "^2.1.0",
     "jest": "^25.2.7"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["ClientApp", "node_modules"]
   }
 }

@@ -1,5 +1,5 @@
 import { Container } from './container';
 
-export class TruckContents{
+export class TruckContents {
     containers: Container[];
 }
