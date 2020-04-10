@@ -9,7 +9,7 @@
     "run:all": "npm run build --prefix clientapp && node app",
     "build:server":"npm run build",
     "test:unit-server": "jest",
-    "test:unit-all": "jest && npm run test --prefix clientapp",
+    "test:unit-all": "npm run test --prefix clientapp && jest",
     "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
     "lint:server": "eslint .",
     "lint:all": "eslint . && npm run lint --prefix clientapp"
