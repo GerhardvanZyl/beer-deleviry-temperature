@@ -1,22 +1,23 @@
 {
   "name": "pragma-brewery",
   "version": "1.0.0",
-  "description": "",
+  "description": "PragmaBrewery Assignment",
   "main": "app.js",
   "scripts": {
-    "setup": "npm install && cd clientapp && npm install -n && cd ..",
-    "run:server": "node app",
-    "run:all": "npm run build --prefix clientapp && node app",
-    "build:server":"npm run build",
-    "test:unit-server": "jest",
-    "test:unit-all": "npm run test --prefix clientapp && jest",
+    "test": "jest",
     "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
-    "lint:server": "eslint .",
-    "lint:all": "eslint . && npm run lint --prefix clientapp"
+    "lint:server": "eslint ."
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GerhardvanZyl/pragma-brewery.git"
+  },
   "author": "Gerhard van Zyl",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GerhardvanZyl/pragma-brewery/issues"
+  },
+  "homepage": "https://github.com/GerhardvanZyl/pragma-brewery#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "express": "^4.17.1"
@@ -24,9 +25,6 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-strongloop": "^2.1.0",
-    "jest": "^25.2.7"
-  },
-  "jest": {
-    "testPathIgnorePatterns": ["ClientApp", "node_modules"]
+    "jest": "^25.3.0"
   }
 }

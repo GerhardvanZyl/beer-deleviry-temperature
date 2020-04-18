@@ -1,70 +1,42 @@
-module.exports = class TruckController {
+const TruckDataProvider = require('../providers/mock-truck-data-provider');
+const BeerDataProvider = require('../providers/mock-beer-data-provider');
+const TemperatureDataProvider = require('../providers/temperature-data-provider');
 
-    /**
-     * 
-     * @param {*} logger - Instance of the logging service
-     * @param {*} webNotificationProvider - Web notification provider, providing notifications in a format for a browser.
-     * @param {*} beerDataProvider - beer data provider for retrieving beer info.
-     * @param {*} truckDataProvider - truck data provider for retrieving info about truck contents
-     * @param {*} temperatureDataProvider - provider that supplies temperature data about the truck content
-     */
-    constructor(logger, webNotificationProvider, beerDataProvider, truckDataProvider, temperatureDataProvider) {
-
-        this._logger = logger;
-        this._notificationProvider = webNotificationProvider;
-        this._beerDataProvider = beerDataProvider;
-        this._truckDataProvider = truckDataProvider;
-        this._temperatureDataProvider = temperatureDataProvider;
-
-        this._logger.logInfo('Truck Controller Initialized...');
-    }
-
-    /**
-     * [/truck/notifications]
-     * Gets all notifications
-     * @param {*} req 
-     * @param {*} res 
-     */
-    getNotifications(req, res) {
+/**
+ * [/truck/content]
+ * Gets info about the contents of the truck, including beer type, ideal temperatures and current temperature
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports = {
+    getContent: async (req, res) => {
         try {
-            let notifications = this._notificationProvider.getLatestNotifications();
-            res.json(notifications);
-        } catch (e) {
-            this._logger.logError(e);
-            throw e;
-        }
-    }
 
-    /**
-     * [/truck/notifications]
-     * Gets info about the contents of the truck, including beer type, ideal temperatures and current temperature
-     * @param {*} req 
-     * @param {*} res 
-     */
-    async getContentInfo(req, res) {
-        try {
-            let truckContent = this._truckDataProvider.getContents();
+            const truckContent = new TruckDataProvider().fetchContent();
 
-            // Get all the unique beer types in the truck and their info
-            // This would typically be cached by the provider, so we can just call it.
-            let beerTypes = [...new Set(truckContent.map(container => container.type))];
-            let beerIds = truckContent.map(container => container.id);
+            // Get all the unique beer types in the truck and their info and clone into a new object
+            const beerTypes = [...new Set(truckContent.map(container => container.type))];
 
-            let beerTypeInfo = {};
+            const beerIds = truckContent.map(container => container.id);
 
+            const beerTypeInfo = {};
             beerTypes.forEach(beerType => {
-                let beerInfo = this._beerDataProvider.getBeerInfoFor(beerType);
+                // clone the result of the beer info fetched from the provider into a new object.
+                // and use the beer type as the key
+                const beerInfo = { ... new BeerDataProvider().fetchBeerInfoFor(beerType) };
                 beerTypeInfo[beerType] = beerInfo;
             });
 
-            let temperatures = await this._temperatureDataProvider.getTemperatures(beerIds);
+            const temperatures = await new TemperatureDataProvider().fetchTemperatureFor(beerIds);
 
-            let contentInfo = temperatures.map(tempInfo => {
-                let container = truckContent.find(x => x.id === parseInt(tempInfo.id));
+            // Create an array of container info objects, containing the beer type,
+            // the ideal temperatures and the current temperature
+            const contentInfo = temperatures.map(temperatureInfo => {
+                const container = truckContent.find(currentContainer => currentContainer.id === parseInt(temperatureInfo.id));
                 return {
                     containerId: container.id,
-                    type: container.type,
-                    temperature: tempInfo.temperature,
+                    beerName: container.type,
+                    temperature: temperatureInfo.temperature,
                     minTemp: beerTypeInfo[container.type].minTemp,
                     maxTemp: beerTypeInfo[container.type].maxTemp,
                     position: container.position
@@ -73,8 +45,12 @@ module.exports = class TruckController {
 
             res.json(contentInfo);
         } catch (e) {
-            this._logger.logError(e);
-            throw e;
+            console.log(e);
+            
+            res.status(500).send({
+                error: 'An error occured while trying to retrieve the truck content info.'
+            });
         }
     }
 };
+
