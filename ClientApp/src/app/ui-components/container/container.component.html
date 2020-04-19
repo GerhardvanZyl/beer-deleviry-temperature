@@ -1,0 +1,7 @@
+<div [class.out-of-range]="!isTempCorrect">
+    <h3>{{ this.container.beerName}} :: {{this.container.temperature}}<sup>o</sup>C</h3>
+    <ul>
+        <li><span>Minimum Temperature</span><span>{{this.container.minTemp}}</span></li>
+        <li><span>Maximum Temperature</span><span>{{this.container.maxTemp}}</span></li>
+    </ul>
+</div>

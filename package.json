@@ -4,9 +4,15 @@
   "description": "PragmaBrewery Assignment",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "setup": "npm install && cd clientapp && npm install -n && cd ..",
+    "run:server": "node app",
+    "run:all": "npm run build --prefix clientapp && node app",
+    "build:server":"npm run build",
+    "test:unit-server": "jest",
+    "test:unit-all": "npm run test --prefix clientapp && jest",
     "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
-    "lint:server": "eslint ."
+    "lint:server": "eslint .",
+    "lint:all": "eslint . && npm run lint --prefix clientapp"
   },
   "repository": {
     "type": "git",

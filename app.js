@@ -5,9 +5,10 @@ const truckController = require('./controllers/truck-controller');
 
 const port = 3000;
 
-app.listen(port, ()=>{
-    console.log(`listening on port http://localhost:${port}`);
+const listener = app.listen(port, ()=>{
+    console.log(`listening on http://localhost:${listener.address().port}`);
 });
 
 // routes
-app.get('/truck/content', truckController.getContent);
+app.use(express.static('wwwroot'));
+app.get('/api/truck/content', truckController.getContent);

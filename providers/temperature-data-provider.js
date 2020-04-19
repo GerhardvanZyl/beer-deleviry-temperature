@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const temperatureSourceUrl =`https://temperature-sensor-service.herokuapp.com/sensor/`;
+
 module.exports = class TemperatureDataProvider {
 
     /**
@@ -13,12 +15,11 @@ module.exports = class TemperatureDataProvider {
         }
 
         try {
-
             const requests = [];
 
             containerIds.forEach(containerId => {
                 requests.push(
-                    axios.get(`https://temperature-sensor-service.herokuapp.com/sensor/${containerId}`)
+                    axios.get('temperatureSourceUrl' + containerId)
                 );
             });
 
