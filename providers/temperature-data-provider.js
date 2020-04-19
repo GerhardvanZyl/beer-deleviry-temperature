@@ -1,54 +1,36 @@
 const axios = require('axios');
 
+const temperatureSourceUrl =`https://temperature-sensor-service.herokuapp.com/sensor/`;
+
 module.exports = class TemperatureDataProvider {
-    constructor(logger, configService) {
-        this._logger = logger;
-        this._configService = configService;
-    }
 
     /**
-     * Retrieve the temperature for a specific container.
-     * @param {string} containerId 
-     * @returns * temperature: number
+     * Returns the temperates for the specified containers.
+     * @param {string[]} containerIds - Ids of the containers for which we want the temperatures
      */
-    async getTemperatureFor(containerId) {
+    async fetchTemperatureFor(containerIds) {
 
-        let temperatureData;
-        try {
-            temperatureData = await axios
-                .get(`${this._configService.getConfigFor('temperatureProviderEndpoint')}/sensor/${containerId} `);
-        } catch (e) {
-            this._logger.logError(e);
-            throw 'Error while attempting to get temperature data. Please try again later.';
+        if (!containerIds || containerIds.length <= 0) {
+            throw 'Argument exception - containerIds should be non-null and contain values.';
         }
 
-        return temperatureData.data.temperature;
-    }
-
-    /**
-     * Retrieve the temperatures for many containers at once
-     * @param {string} containerIds 
-     * @returns {id: string, temperature: number}
-     */
-    async getTemperatures(containerIds) {
-
-        let requests = [];
-        let responses;
-
         try {
+            const requests = [];
+
             containerIds.forEach(containerId => {
                 requests.push(
-                    axios.get(`${this._configService.getConfigFor('temperatureProviderEndpoint')}/sensor/${containerId}`)
+                    axios.get('temperatureSourceUrl' + containerId)
                 );
             });
 
-            responses = await axios.all(requests);
-        } catch (e) {
-            this._logger.logError(e);
-            throw 'Error while attempting to get temperature data. Please try again later.';
-        }
+            const responses = await axios.all(requests);
 
-        let temperatures = responses.map(response => response.data);
-        return temperatures;
+            const temperatures = responses.map(response => response.data);
+            return temperatures;
+
+        } catch (e) {
+            console.log(e);
+            throw 'Error while attempting to fetch temperature data.';
+        }
     }
 };

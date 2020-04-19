@@ -21,7 +21,7 @@ describe('ContainerComponent', () => {
             temperature: 1,
             minTemp: 3,
             maxTemp: 5,
-            type: 'Pilsner'
+            beerName: 'Pilsner'
         };
 
         component.container = containerData;

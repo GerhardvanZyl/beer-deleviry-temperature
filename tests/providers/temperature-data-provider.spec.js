@@ -1,48 +1,26 @@
 const TemperatureDataProvider = require('../../providers/temperature-data-provider');
-const ConfigurationService = require('../../services/mock-configuration-service');
 const axios = require('axios');
-
-let loggerMock = {
-    logInfo: () => { },
-    logWarning: () => { },
-    logError: () => { }
-};
-
-// No need to mock the config service as it is already a mock
-let configSvc = new ConfigurationService();
 
 describe('TemperatureDataProvider', () => {
 
     let temperatureProvider;
 
     beforeEach(() => {
-        temperatureProvider = new TemperatureDataProvider(loggerMock, configSvc);
+        temperatureProvider = new TemperatureDataProvider();
     });
 
     it('should initialize', () => {
         expect(temperatureProvider).toBeDefined();
     });
 
-    describe('getTemperatureFor', () => {
-        it('should get the temperature of a specific container', () => {
-            jest.spyOn(axios, 'get').mockResolvedValue({
-                data: { temperature: 1, id: '1' }
-            });
-
-            let temp = temperatureProvider.getTemperatureFor('1').then(() => {
-                expect(temp).toEqual(1);
-            });
-        });
-    });
-
-    describe('getTemperatures', () => {
+    describe('fetchTemperatureFor', () => {
         it('should get the temperature of multiple containers', () => {
             let count = 0;
             jest.spyOn(axios, 'get').mockResolvedValue({
                 data: { temperature: 10 + count++, id: (++count).toString() }
             });
 
-            let temp = temperatureProvider.getTemperatures(['1', '2', '3']).then(() => {
+            let temp = temperatureProvider.fetchTemperatureFor(['1', '2', '3']).then(() => {
 
                 expect(temp[0].temperature).toEqual(10);
                 expect(temp[1].temperature).toEqual(11);
@@ -54,6 +32,25 @@ describe('TemperatureDataProvider', () => {
 
             });
         });
-    });
 
+        it('should throw an exception if the ids arent specified', async () => {
+            await expect(
+                temperatureProvider.fetchTemperatureFor([])
+            )
+                .rejects
+                .toEqual('Argument exception - containerIds should be non-null and contain values.');
+        });
+
+        it('should throw an exception if there is an error connecting to the remote server', async () => {
+
+            jest.spyOn(axios, 'get').mockRejectedValue(new Error('Server 500 error'));
+            jest.spyOn(axios, 'all').mockRejectedValue(new Error('Server 500 error'));
+
+            await expect(
+                temperatureProvider.fetchTemperatureFor(['1'])
+            )
+                .rejects
+                .toEqual('Error while attempting to fetch temperature data.');
+        });
+    });
 });

@@ -5,7 +5,6 @@ import { TruckService } from './services/truck.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ContainerComponent } from './ui-components/container/container.component';
-import { SimTruckService } from './services/simulators/truck.service.sim';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { SimTruckService } from './services/simulators/truck.service.sim';
     HttpClientModule
   ],
   providers: [
-    TruckService,
-    SimTruckService
+    TruckService
   ],
   bootstrap: [AppComponent]
 })

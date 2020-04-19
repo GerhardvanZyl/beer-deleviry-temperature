@@ -1,8 +1,7 @@
 export class Container {
     containerId: string;
-    type: string;
+    beerName: string;
     temperature: number;
     minTemp: number;
     maxTemp: number;
-    position: string;
 }
