@@ -1,0 +1,4 @@
+/.vscode/**
+/ClientApp/**
+/node_modules/**
+/wwwroot/**
