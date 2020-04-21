@@ -27,26 +27,28 @@ module.exports = {
                 beerTypeInfo[beerType] = beerInfo;
             });
 
-            const temperatures = await new TemperatureDataProvider().fetchTemperatureFor(beerIds);
+            const temparatureGenerator = new TemperatureDataProvider()
+                .fetchTemperatureFor(beerIds);
 
             // Create an array of container info objects, containing the beer type,
             // the ideal temperatures and the current temperature
-            const contentInfo = temperatures.map(temperatureInfo => {
+            const contentInfo = [];
+            for await(let temperatureInfo of temparatureGenerator){
                 const container = truckContent.find(currentContainer => currentContainer.id === parseInt(temperatureInfo.id));
-                return {
+                contentInfo.push({
                     containerId: container.id,
                     beerName: container.type,
                     temperature: temperatureInfo.temperature,
                     minTemp: beerTypeInfo[container.type].minTemp,
                     maxTemp: beerTypeInfo[container.type].maxTemp,
                     position: container.position
-                };
-            });
+                });
+            }
 
             res.json(contentInfo);
         } catch (e) {
             console.log(e);
-            
+
             res.status(500).send({
                 error: 'An error occured while trying to retrieve the truck content info.'
             });
