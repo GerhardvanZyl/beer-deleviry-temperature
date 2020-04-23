@@ -3,3 +3,5 @@ node_modules
 
 wwwroot/*
 wwwroot/!index.html
+wwwroot/!favicon.ico
+ClientApp/debug.log
