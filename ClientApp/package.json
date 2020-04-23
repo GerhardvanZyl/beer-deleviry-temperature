@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "e2e:debug": "node --inspect-brk ./node_modules/protractor/bin/protractor ./e2e/protractor.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -15,6 +17,7 @@
     "@angular/core": "~8.2.5",
     "@angular/platform-browser": "~8.2.5",
     "@angular/platform-browser-dynamic": "~8.2.5",
+    "protractor": "^5.4.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
