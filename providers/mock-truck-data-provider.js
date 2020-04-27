@@ -17,27 +17,27 @@ module.exports = class MockTruckDataProvider {
         // JSON.parse() is faster than creating an object literal
         return JSON.parse(`[
           {
-            "id": 1,
+            "id": "1",
             "type": "Pilsner"
           },
           {
-            "id": 2,
+            "id": "2",
             "type": "IPA"
           },
           {
-            "id": 3,
+            "id": "3",
             "type": "Lager"
           },
           {
-            "id": 4,
+            "id": "4",
             "type": "Stout"
           },
           {
-            "id": 5,
+            "id": "5",
             "type": "Wheat Beer"
           },
           {
-            "id": 6,
+            "id": "6",
             "type": "Pale Ale"
           }
         ]`);
