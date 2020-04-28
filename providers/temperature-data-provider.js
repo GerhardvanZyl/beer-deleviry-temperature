@@ -13,10 +13,17 @@ module.exports = class TemperatureDataProvider {
             throw 'Argument exception - containerIds should be non-null and contain values.';
         }
 
+        const promises = [];
+
         try {
-            for (let containerId of containerIds){
-                yield (await axios.get(temperatureSourceUrl + containerId)).data;
+            for (const containerId of containerIds){
+               promises.push(axios.get(temperatureSourceUrl + containerId));
             }
+
+            for (const promise of promises){
+                yield (await promise).data;
+            }
+            
         } catch (e) {
             console.log(e);
             throw 'Error while attempting to fetch temperature data.';
