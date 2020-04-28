@@ -12,43 +12,35 @@ Lastly, you can run application:
 
     npm run run:all
 
-The site is then available on http:localhost:3000
+The site is then available on http://localhost:3000
 
 Other commands you can try are:
 
     npm run test:unit-all
     npm run lint:all
+    npm run e2e
 
 ## Description
 PragmaBrewery's requirement is purely to monitor the temperature of the beer containers inside the truck.
 
 ## The Code
 #### Description
-The code has been purposely over-engineered for the task at hand.
-
 The solution is broken down into two parts, and my focus has been mostly on the server side and the Angular part taking a back seat. 
 
-The server received the most attention during development and runs on node js. It is built to be easy to maintain and extend as the product evolves. 
+The server received the most attention during development and runs on node js.
 
-The different components are decoupled and makes use of dependency injection. These dependency include plugable notification providers so that different notification components can be added as necessary without requiring extensive code changes.
-
-It also assumes that the back-end makes use of a micro services architecture, with services that are responsible for a single domain.
-Additionally it makes use of a logging provider and configuration service.
-
-All these changes will ensure that it will be easy to upgrade or even switch out components for other ones.
-
-The above is also part of the reason why the web application is an SPA that is wholly separate from the server, which only serves a static index.html file and further relies on api calls to retrieve data.
-
-The web application is built using Angular 8, and it makes use of a service factory to enable switching between data providers based on the environment it runs in. 
+It assumes that the back-end makes use of a micro services architecture, with services that are responsible for a single domain.
 
 In the interest of being upfront, I did use Angular Cli in the generation of the application, as this is the recommended way to create applications. I did however create all the files and structure in the src directory onward by hand in the layout that prefer.
 
-In both tiers, but especially server side I have made plenty use of mock providers, which can be easily identified by their names.
+Server side I have made plenty use of mock providers, which can be easily identified by their names.
+
+I have also created a pull request to merge a change in that uses a generator function for the provider. This provides a negligible performance benefit and was mostly done to try an alternative approach:
+
 
 #### Gaps and outstanding functionality that would be presented in an actual production quality application
 - There are of course plenty of mocks, which would be replaced with actual providers.
 - Negative flows. I have logged errors where I thing appropriate, but the unit tests for negative flows are lacking, as well as displaying errors to the user. I make use of Express' error handling.
-- Singletons - At the moment all my controllers, services and providers server-side are singletons. The controllers should only be for the life cycle of the request to ensure that the api is stateless. Some of the providers should be singletons so that they can cache data that doesn't change often.
 - Request and response logging.
 - UI for the client app is very lackluster.
 - Unit testing for the client app focus purely on logic, and as there isn't much logic on the front-end, there aren't much unit tests. 
@@ -60,9 +52,6 @@ The problem is that the beer gets outside of the ideal temperature and the quali
 
 **Ideally, how would you like the application to work?**
 They would like a dashboard type view showing the status of each of the containers, and have some sort of easy to see indication when a container falls outside that acceptable range. That dashboard application can then be displayed on a phone or tablet inside the truck.
-
-**Would you like  any other kind of notifications? Email or SMS perhaps?**
-As the business is expanding, they would. Although, for now the dashboard is fine as Shane is quite trustworthy.
 
 **Does it need to be behind authentication?**
 No, public is fine.
