@@ -43,8 +43,7 @@ https://github.com/GerhardvanZyl/pragma-brewery/pull/6
 - Negative flows. I have logged errors where I thing appropriate, but the unit tests for negative flows are lacking, as well as displaying errors to the user. I make use of Express' error handling.
 - Request and response logging.
 - UI for the client app is very lackluster.
-- Unit testing for the client app focus purely on logic, and as there isn't much logic on the front-end, there aren't much unit tests. 
-- There is a route for retrieving notifications on the server which is never used. It does however still show my approach to software development. I instead only retrieve the full truck contents.
+- Unit testing for the client app focus purely on logic, and as there isn't much logic on the front-end, there aren't much unit tests.
 
 ## Requirement elicitation
 **What do you want to accomplish with the application? What is the problem that you have that you want to solve?**
