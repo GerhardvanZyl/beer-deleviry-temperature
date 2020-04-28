@@ -12,7 +12,7 @@ Lastly, you can run application:
 
     npm run run:all
 
-The site is then available on http:localhost:3000
+The site is then available on http://localhost:3000
 
 Other commands you can try are:
 
