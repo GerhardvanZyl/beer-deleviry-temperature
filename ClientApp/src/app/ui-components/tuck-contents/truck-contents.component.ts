@@ -43,7 +43,7 @@ export class TruckContentsComponent implements OnInit {
         // If the truckContents don't exist yet, do nothing until it does.
         // The alternative to this check is to set the interval in the subscribe callback of populate
         // but this way the init is more readable.
-        if (this.truckContents.length <= 0) {
+        if (this.truckContents.length > 0) {
             const ids = this.truckContents.map(container => container.containerId);
 
             this.truckService.temperatures(ids).subscribe(
