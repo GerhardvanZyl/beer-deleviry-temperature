@@ -7,6 +7,7 @@ describe('workspace-project App', () => {
   beforeEach(() => {
     page = new AppPage();
     browser.sleep(10000);
+    browser.waitForAngularEnabled(false);
   });
 
   it('should display welcome message', () => {
