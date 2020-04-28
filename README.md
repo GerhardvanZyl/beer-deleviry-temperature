@@ -60,4 +60,4 @@ No, public is fine.
 Shane only uses Chrome, so that is fine.
 
 **How will the data be captured**
-They will handle that, we don't need to worry about it. 
+They will handle that, we don't need to worry about it.
