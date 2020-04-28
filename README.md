@@ -25,8 +25,6 @@ PragmaBrewery's requirement is purely to monitor the temperature of the beer con
 
 ## The Code
 #### Description
-The code has been purposely over-engineered for the task at hand.
-
 The solution is broken down into two parts, and my focus has been mostly on the server side and the Angular part taking a back seat. 
 
 The server received the most attention during development and runs on node js.
