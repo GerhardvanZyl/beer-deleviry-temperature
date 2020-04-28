@@ -36,7 +36,7 @@ In the interest of being upfront, I did use Angular Cli in the generation of the
 Server side I have made plenty use of mock providers, which can be easily identified by their names.
 
 I have also created a pull request to merge a change in that uses a generator function for the provider. This provides a negligible performance benefit and was mostly done to try an alternative approach:
-
+https://github.com/GerhardvanZyl/pragma-brewery/pull/6
 
 #### Gaps and outstanding functionality that would be presented in an actual production quality application
 - There are of course plenty of mocks, which would be replaced with actual providers.
