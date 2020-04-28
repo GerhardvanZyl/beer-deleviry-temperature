@@ -13,7 +13,7 @@
     "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
     "lint:server": "eslint .",
     "lint:all": "eslint . && npm run lint --prefix clientapp",
-    "e2e": "start npm run run:server && npm run e2e --prefix clientapp",
+    "e2e": "start node app && npm run e2e --prefix clientapp",
     "e2e:debug-client": "npm run e2e:debug --prefix clientapp"
   },
   "repository": {
