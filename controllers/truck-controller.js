@@ -34,7 +34,7 @@ module.exports = {
             // the ideal temperatures and the current temperature
             const contentInfo = [];
             for await(let temperatureInfo of temparatureGenerator){
-                const container = truckContent.find(currentContainer => currentContainer.id === parseInt(temperatureInfo.id));
+                const container = truckContent.find(currentContainer => currentContainer.id === temperatureInfo.id);
                 contentInfo.push({
                     containerId: container.id,
                     beerName: container.type,
@@ -49,6 +49,38 @@ module.exports = {
         } catch (e) {
             console.log(e);
 
+            res.status(500).send({
+                error: 'An error occured while trying to retrieve the truck content info.'
+            });
+        }
+    },
+
+    getTemperatures: async (req, res) => {
+        try{
+
+            const argumentException = 'Expected container ids in the request';
+            if(!req.query.beerIds){
+                throw argumentException;
+            }
+
+            const beerIds = req.query.beerIds.split(',');
+            if(beerIds.length <= 0){
+                argumentException;
+            }
+
+            const temparatureGenerator = new TemperatureDataProvider()
+            .fetchTemperatureFor(beerIds);
+
+            const temperatures = [];
+            for await(const temperatureInfo of temparatureGenerator){
+                temperatures.push(temperatureInfo);
+            }
+
+            res.json(temperatures);
+
+        } catch (e) {
+            console.log(e);
+            
             res.status(500).send({
                 error: 'An error occured while trying to retrieve the truck content info.'
             });

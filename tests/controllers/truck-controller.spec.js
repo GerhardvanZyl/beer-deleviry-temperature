@@ -7,17 +7,15 @@ describe('truckController', () => {
 
         const req = {};
         const res = {
-            json: ()=>{
-            }
+            json: ()=>{}
         };
 
         let jsonSpy;
         let resultJson;
 
         beforeEach(()=>{
-            let count = 0;
             jest.spyOn(axios, 'get').mockResolvedValue({
-                data: { temperature: 10 + count++, id: (++count).toString() }
+                data: { temperature: 10, id: '1' }
             });
             
             jsonSpy = jest.spyOn(res, 'json').mockImplementation((param)=>{
@@ -45,5 +43,39 @@ describe('truckController', () => {
             }
         });
 
+    });
+
+    describe('getTemperatures', () => {
+
+        let resultJson;
+
+        const req = {
+            query: {
+                beerIds: '1,2,3'
+            }
+        };
+        const res = {
+            json: ()=>{},
+            status: ()=>{}
+        };
+
+        beforeEach(()=>{
+            jest.spyOn(axios, 'get').mockResolvedValue({
+                data: { temperature: 10, id: '1' }
+            });
+            
+            jest.spyOn(res, 'json').mockImplementation((param)=>{
+                resultJson = param;
+            });
+        });
+
+        it('should return the temperatures for the requested ids', async () => {
+            
+            await _truckController.getTemperatures(req, res);
+            expect(resultJson).toBeDefined();
+            expect(resultJson[0].id).toEqual('1');
+            expect(resultJson[0].temperature).toEqual(10);
+        });
+        
     });
 });
