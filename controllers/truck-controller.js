@@ -39,7 +39,9 @@ module.exports = {
                     temperature: temperatureInfo.temperature,
                     minTemp: beerTypeInfo[container.type].minTemp,
                     maxTemp: beerTypeInfo[container.type].maxTemp,
-                    position: container.position
+                    position: container.position,
+                    isInRange: temperatureInfo.temperature <= beerTypeInfo[container.type].maxTemp 
+                        && temperatureInfo.temperature >= beerTypeInfo[container.type].minTemp 
                 };
             });
 

@@ -3,7 +3,6 @@ import { ContainerComponent } from './container.component';
 
 describe('ContainerComponent', () => {
 
-    let containerData;
     let fixture;
     let component;
 
@@ -16,17 +15,6 @@ describe('ContainerComponent', () => {
 
         fixture = TestBed.createComponent(ContainerComponent);
         component = fixture.componentInstance;
-
-        containerData = {
-            temperature: 1,
-            minTemp: 3,
-            maxTemp: 5,
-            beerName: 'Pilsner'
-        };
-
-        component.container = containerData;
-
-        fixture.detectChanges();
     }));
 
     afterEach(() => {
@@ -35,27 +23,77 @@ describe('ContainerComponent', () => {
 
     describe('isTempCorrect', () => {
         it('should return false if the temperature is too high', () => {
-            containerData.temperature = 10;
+            let containerData = {
+                temperature: 10,
+                minTemp: 3,
+                maxTemp: 5,
+                beerName: 'Pilsner',
+                isInRange: false
+            };
+    
+            component.container = containerData;
+    
+            fixture.detectChanges();
             expect(component.isTempCorrect).toEqual(false);
         });
 
         it('should return false if the temperature is too low', () => {
-            containerData.temperature = 1;
+            let containerData = {
+                temperature: 1,
+                minTemp: 3,
+                maxTemp: 5,
+                beerName: 'Pilsner',
+                isInRange: false
+            };
+    
+            component.container = containerData;
+    
+            fixture.detectChanges();
             expect(component.isTempCorrect).toEqual(false);
         });
 
         it('should return true if the temperature is just right', () => {
-            containerData.temperature = 4;
+            let containerData = {
+                temperature: 4,
+                minTemp: 3,
+                maxTemp: 5,
+                beerName: 'Pilsner',
+                isInRange: true
+            };
+    
+            component.container = containerData;
+    
+            fixture.detectChanges();
             expect(component.isTempCorrect).toEqual(true);
         });
 
         it('should return true if the temperature the same as the minimum temperature', () => {
-            containerData.temperature = 3;
+            let containerData = {
+                temperature: 3,
+                minTemp: 3,
+                maxTemp: 5,
+                beerName: 'Pilsner',
+                isInRange: true
+            };
+    
+            component.container = containerData;
+    
+            fixture.detectChanges();
             expect(component.isTempCorrect).toEqual(true);
         });
 
         it('should return true if the temperature the same as the maximum temperature', () => {
-            containerData.temperature = 5;
+            let containerData = {
+                temperature: 5,
+                minTemp: 3,
+                maxTemp: 5,
+                beerName: 'Pilsner',
+                isInRange: true
+            };
+    
+            component.container = containerData;
+    
+            fixture.detectChanges();
             expect(component.isTempCorrect).toEqual(true);
         });
     });

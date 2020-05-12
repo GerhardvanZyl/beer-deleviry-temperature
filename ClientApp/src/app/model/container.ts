@@ -4,4 +4,5 @@ export class Container {
     temperature: number;
     minTemp: number;
     maxTemp: number;
+    isInRange: boolean;
 }

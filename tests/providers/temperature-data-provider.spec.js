@@ -15,21 +15,25 @@ describe('TemperatureDataProvider', () => {
 
     describe('fetchTemperatureFor', () => {
         it('should get the temperature of multiple containers', () => {
-            let count = 0;
-            jest.spyOn(axios, 'get').mockResolvedValue({
-                data: { temperature: 10 + count++, id: (++count).toString() }
+            jest.spyOn(axios, 'get').mockResolvedValueOnce({
+                data: { temperature: 10, id: '1' }
+            });
+            jest.spyOn(axios, 'get').mockResolvedValueOnce({
+                data: { temperature: 11, id: '2' }
+            });
+            jest.spyOn(axios, 'get').mockResolvedValueOnce({
+                data: { temperature: 12, id: '3' }
             });
 
-            let temp = temperatureProvider.fetchTemperatureFor(['1', '2', '3']).then(() => {
+            return temperatureProvider.fetchTemperatureFor(['1', '2', '3']).then((result) => {
 
-                expect(temp[0].temperature).toEqual(10);
-                expect(temp[1].temperature).toEqual(11);
-                expect(temp[2].temperature).toEqual(12);
+                expect(result[0].temperature).toEqual(10);
+                expect(result[1].temperature).toEqual(11);
+                expect(result[2].temperature).toEqual(12);
 
-                expect(temp[0].id).toEqual(1);
-                expect(temp[1].id).toEqual(2);
-                expect(temp[2].id).toEqual(3);
-
+                expect(result[0].id).toEqual('1');
+                expect(result[1].id).toEqual('2');
+                expect(result[2].id).toEqual('3');
             });
         });
 

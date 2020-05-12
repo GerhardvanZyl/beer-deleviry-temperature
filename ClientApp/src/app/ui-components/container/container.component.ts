@@ -11,8 +11,7 @@ export class ContainerComponent {
     public container: Container;
 
     public get isTempCorrect() {
-        return !(this.container.temperature < this.container.minTemp
-            || this.container.temperature > this.container.maxTemp);
+        return this.container.isInRange;
     }
     constructor() {
     }
