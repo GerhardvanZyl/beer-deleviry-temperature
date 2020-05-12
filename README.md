@@ -36,15 +36,14 @@ In the interest of being upfront, I did use Angular Cli in the generation of the
 Server side I have made plenty use of mock providers, which can be easily identified by their names.
 
 I have also created a pull request to merge a change in that uses a generator function for the provider. This provides a negligible performance benefit and was mostly done to try an alternative approach:
-
+https://github.com/GerhardvanZyl/pragma-brewery/pull/6
 
 #### Gaps and outstanding functionality that would be presented in an actual production quality application
 - There are of course plenty of mocks, which would be replaced with actual providers.
 - Negative flows. I have logged errors where I thing appropriate, but the unit tests for negative flows are lacking, as well as displaying errors to the user. I make use of Express' error handling.
 - Request and response logging.
 - UI for the client app is very lackluster.
-- Unit testing for the client app focus purely on logic, and as there isn't much logic on the front-end, there aren't much unit tests. 
-- There is a route for retrieving notifications on the server which is never used. It does however still show my approach to software development. I instead only retrieve the full truck contents.
+- Unit testing for the client app focus purely on logic, and as there isn't much logic on the front-end, there aren't much unit tests.
 
 ## Requirement elicitation
 **What do you want to accomplish with the application? What is the problem that you have that you want to solve?**
@@ -60,4 +59,4 @@ No, public is fine.
 Shane only uses Chrome, so that is fine.
 
 **How will the data be captured**
-They will handle that, we don't need to worry about it. 
+They will handle that, we don't need to worry about it.
