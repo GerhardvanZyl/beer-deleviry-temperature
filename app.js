@@ -13,3 +13,8 @@ const listener = app.listen(port, ()=>{
 app.use(express.static('wwwroot'));
 app.get('/api/truck/content', truckController.getContent);
 app.get('/api/truck/temperature', truckController.getTemperatures);
+
+module.exports = {
+    app: app,
+    listener: listener
+};

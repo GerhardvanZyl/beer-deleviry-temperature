@@ -1,19 +1,13 @@
 const _truckController = require('../../controllers/truck-controller');
 const axios = require('axios');
+const request = require('supertest');
+const server = require('../../app');
 
 describe('truckController', () => {
 
     describe('getContent', () => {
 
-        const req = {};
-        const res = {
-            json: ()=>{}
-        };
-
-        let jsonSpy;
-        let resultJson;
-
-        beforeEach(()=>{
+        beforeEach(() => {
             jest.spyOn(axios, 'get').mockResolvedValueOnce({
                 data: { temperature: 1, id: '1' }
             });
@@ -32,92 +26,68 @@ describe('truckController', () => {
             jest.spyOn(axios, 'get').mockResolvedValueOnce({
                 data: { temperature: 6, id: '6' }
             });
-            
-            jsonSpy = jest.spyOn(res, 'json').mockImplementation((param)=>{
-                resultJson = param;
-            });
         });
 
-        afterEach(()=>{
-            resultJson = null;
-            jsonSpy = null;
+        afterAll(() => {
+            server.listener.close();
         });
 
-        it('should return information about the current truck contents.', async () => {
-            
-            await _truckController.getContent(req, res);
-            expect(resultJson).toBeDefined();
-            expect(jsonSpy).toHaveBeenCalled();
-        });
+        it('should contain the temperature and type of beer and ideal temperatures of each container.', async (done) => {
+            const response = await request(server.app).get('/api/truck/content');
 
-        it('should contain the temperature and type of beer and ideal temperatures of each container.', async () => {
-            
-            await _truckController.getContent(req, res);
+            for (let i = 0; i < response.body.length; i++) {
 
-            for ( let i = 0; i < resultJson.length; i++) {
-                
-                let result = resultJson[i];
+                let result = response.body[i];
 
-                expect(result.containerId).toEqual((i+1).toString());
-                expect(result.temperature).toEqual(i+1);
+                expect(result.containerId).toEqual((i + 1).toString());
+                expect(result.temperature).toEqual(i + 1);
                 expect(result.beerName).toBeDefined();
                 expect(result.minTemp).toBeDefined();
                 expect(result.maxTemp).toBeDefined();
             }
+
+            done();
         });
 
-        it('should set the isInRange flag to false if the temperature falls out of the acceptable range.', async () => {
-            
-            await _truckController.getContent(req, res);
+        it('should set the isInRange flag to false if the temperature falls out of the acceptable range.', async (done) => {
+            const response = await request(server.app).get('/api/truck/content');
 
-            for ( let i = 0; i < resultJson.length; i++) {
-                
-                let result = resultJson[i];
+            for (let i = 0; i < response.body.length; i++) {
+
+                let result = response.body[i];
 
                 expect(result.minTemp).toBeDefined();
                 expect(result.maxTemp).toBeDefined();
 
-                if(result.temperature <= result.maxTemp && result.temperature >= result.minTemp ){
+                if (result.temperature <= result.maxTemp && result.temperature >= result.minTemp) {
                     expect(result.isInRange).toBe(true);
                 } else {
                     expect(result.isInRange).toBe(false);
                 }
             }
+
+            done();
         });
 
     });
 
     describe('getTemperatures', () => {
 
-        let resultJson;
-
-        const req = {
-            query: {
-                beerIds: '1,2,3'
-            }
-        };
-        const res = {
-            json: ()=>{},
-            status: ()=>{}
-        };
-
-        beforeEach(()=>{
+        beforeEach(() => {
             jest.spyOn(axios, 'get').mockResolvedValue({
                 data: { temperature: 10, id: '1' }
             });
-            
-            jest.spyOn(res, 'json').mockImplementation((param)=>{
-                resultJson = param;
-            });
         });
 
-        it('should return the temperatures for the requested ids', async () => {
-            
-            await _truckController.getTemperatures(req, res);
-            expect(resultJson).toBeDefined();
-            expect(resultJson[0].id).toEqual('1');
-            expect(resultJson[0].temperature).toEqual(10);
+        it('should return the temperatures for the requested ids', async (done) => {
+            const response = await request(server.app).get('/api/truck/content?beerIds=1,2,3');
+            const result = response.body;
+            expect(result).toBeDefined();
+            expect(result[0].containerId).toEqual('1');
+            expect(result[0].temperature).toEqual(10);
+
+            done();
         });
-        
+
     });
 });

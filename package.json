@@ -8,9 +8,9 @@
     "run:server": "npm run build && node app",
     "run:all": "npm run build && node app",
     "build": "npm run build --prefix clientapp",
-    "test:unit-server": "jest",
+    "test:unit-server": "jest --runInBand",
     "test:unit-all": "npm run test --prefix clientapp && npm run test:unit-server",
-    "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand ",
+    "test:debug-server": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
     "lint:server": "eslint .",
     "lint:all": "eslint . && npm run lint --prefix clientapp",
     "e2e": "start npm run run:server && npm run e2e --prefix clientapp",
@@ -33,7 +33,8 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-strongloop": "^2.1.0",
-    "jest": "^25.3.0"
+    "jest": "^25.3.0",
+    "supertest": "^4.0.2"
   },
   "jest": {
     "testPathIgnorePatterns": [
